@@ -1,0 +1,1135 @@
+#!/usr/bin/jadro
+
+# Kerning for the OpenAir group of fonts.
+# Script Copyright 2021 G. Adam Stanislav.
+# All rights reserved.
+
+# Declare some glyph sets. A glyph can appear
+# in any number of sets, and any number of glyphs
+# can appear in a set. Other sets may appear in
+# a set as long as they were declared first.
+#
+#	N.B.: In jadro there is no difference
+#	      between declaring and defining.
+#	      Therefore, there are no forward
+#	      declarations in jadro.
+#
+#	      This is because there are no
+#	      variables in jadro, only constants.
+#
+# Sets are unordered, so they can be declared in
+# any order (except that to include a set in another
+# set, the subset must have been declared before the
+# including set).
+#
+# When sets are included in other sets, the result is
+# an unordered union of all glyphs from the set and
+# its subsets.
+#
+# A set is declared by using a colon followed
+# immediately by the name of the set, then a list
+# of names enclosed in brackets {}. Any name
+# in a jadro script must start by an underline
+# or a letter A-Z or a-z, which then may be followed
+# by more letters A-z, a-z, underlines, dots and
+# digits 0-9.
+#
+# Each name, regardless of its type must be unique.
+# Even if it is declared with an initial symbol,
+# that symbol is used only in the declaration and
+# the name is used without the symbol for the rest
+# of the script.
+#
+# There are no variables. All names refer to a constant.
+# Because of that, for example, once a set is declared,
+# you cannot add to it or take anything out of it.
+#
+# Glyphs need not be declared. Any name used without
+# being declared and without a type symbol is assumed
+# to be a glyph.
+
+# We declare two sets of glyphs derived from the letter A.
+# This is because all of them can be used with the same
+# adjustment when used as periglyphs, while all but one
+# when used as leading glyphs. In some cases, Aogonek is
+# used differently from the rest, which is what exceptions
+# are for.
+:As {A Aacute Abreve Acircumflex Adieresis Agrave Aogonek
+Aring Atilde}
+:periAs {As AE}
+
+# We do the same for the derivations of the letter a.
+# We take advantage of all names being case sensitive.
+:as {a aacute abreve acircumflex adieresis agrave aogonek
+aring atilde}
+:perias {as ae}
+
+:asc {a.sc aacute.sc abreve.sc acircumflex.sc adieresis.sc
+agrave.sc aogonek.sc aring.sc atilde.sc}
+:periasc {asc ae.sc}
+
+:Cs {C Cacute Ccaron Ccedilla Ccircumflex Cdotaccent}
+:cs {c cacute ccaron ccedilla ccircumflex cdotaccent}
+:csc {c.sc cacute.sc ccaron.sc ccedilla.sc ccircumflex.sc cdotaccent.sc}
+
+:ds {d dcaron dcroat}
+:es {e eacute ebreve ecaron ecircumflex edieresis edotaccent egrave
+emacron eogonek}
+
+# The parentheses are ignored, recursively at that. So,
+# where it says, "G(o)dot(yes, (this) is ((fully)ignored))accent",
+# jadro only sees "Gdotaccent".
+:Gs {G Gbreve Gcircumflex G(o)dot(yes, (this) is ((fully)ignored))accent}
+:gs {g gbreve g(and yes,
+
+
+this can go for any number of lines
+
+(without breaking up the 'gcircumflex' label)...)circumflex gdotaccent}
+:gsc {g.sc gbreve.sc gcircumflex.sc gdotaccent.sc}
+
+:Js {J Jcircumflex}
+:jsc {j.sc jcircumflex.sc}
+
+:Ks {K uni0136}
+:ks {k uni0137 kgreenlandic}
+:ksc {k.sc uni0137.sc}
+
+# Sometimes we need to break up an apparently
+# logical set into several sets (and perhaps
+# combine those).
+:L1 {L Lacute}
+:lsc1 {l.sc lacute.sc}
+:L2 {Ldot Lslash}
+:lsc2 {ldot.sc lslah.sc}
+:Ls {L1 L2}
+
+# A set does not need to be derived from the same base
+# letter. In this font family, for example, most glyphs
+# derived from B, D, Eng, Eth, O, Q, S can be used the same
+# when used as leading glyphs, albeit not when used as
+# periglyphs. At least in the left-to-right settings (but
+# that is how Roman-derived alphabets are used).
+#
+# But the Os and Ss can also be placed into their own
+# sets for the peri usage.
+:Os {O Oacute Obreve Ocircumflex Odieresis Ograve
+Ohungarumlaut Omacron Otilde}
+:periOs {Os OE Ohorn}
+:Ss {S Sacute Scaron Scedilla Scircumflex}
+:Round {B D Dcaron Dcroat Eng Eth Os Q Ss}
+
+:os {o oacute obreve ocircumflex odieresis oe ograve
+ohungarumlaut omacron otilde}
+:perios {os ohorn}
+:osc {o.sc oacute.sc obreve.sc ocircumflex.sc odieresis.sc
+ograve.sc ohungarumlaut.sc omacron.sc otilde.sc}
+:periosc {osc oe.sc ohorn.sc}
+:ss {s sacute scaron scedilla scircumflex}
+:ssc {s.sc sacute.sc scaron.sc scedilla.sc scircumflex.sc}
+:roundsc {b.sc d.sc dcaron.sc dcroat.sc eng.sc eth.sc
+osc q.sc ssc}
+
+:Rs {R Racute Rcaron}
+:rs {r racute rcaron}
+:rsc {r.sc racute.sc rcaron.sc}
+
+:Ts {T Tcaron}
+:ts {t tcaron}
+:tsc {t.sc tcaron.sc}
+
+:Ws {W Wcircumflex}
+:ws {w wcircumflex}
+:wsc {w.sc wcircumflex.sc}
+
+:Ys {Y Yacute Ycircumflex Ydieresis}
+:ys {y yacute ycircumflex ydieresis}
+:ysc {y.sc yacute.sc ycircumflex.sc ydieresis.sc}
+
+:Zs {Z Zacute Zcaron Zdotaccent}
+:zs {z zacute zcaron zdotaccent}
+:zsc {z.sc zacute.sc zcaron.sc zdotaccent.sc}
+
+# These are kerned the same in this font group.
+:Horns {Ohorn Uhorn}
+:horns {ohorn uhorn}
+:hornsc {ohorn.sc uhorn.sc}
+
+# These may share the adjustment when used as periglyphs.
+:periCs {Cs Gs periOs Q}
+:perics {cs ds es eth gs perios q}
+:pericsc {csc gsc periosc q.sc}
+
+# It does not have to be just characters/letters but
+# any glyphs.
+:dashes {emdash endash}
+:periods {ellipsis period}
+:commas {comma periods}
+:quotes {quotesingle quotedbl}
+:upperquotes {quoteleft quoteright quotereversed quotedblleft
+quotedblright uni201F}
+:lowerquotes {quotesinglbase quotedblbase}
+:spaces {space uni00A0}
+
+# Finally, we make kerning dictionary entries. Each starts with
+# a tilde, followed by a "key" (which as to be either the name
+# of a glyph or a set we have declared earlier). Then an array
+# of pairs, each starting with the kerning difference number,
+# followed by the name of a glyph or a set we have declared
+# earlier.
+#
+# As a reminder, while a set must be declared before being used,
+# a glyph name can just be used.
+#
+# Unlike the sets, which are unordered, kerning dictionary entries
+# are ordered. This allows us to define the kerning for a large
+# set of glyphs, but make later exceptions with smaller sets of
+# glyphs or even with individual glyphs.
+#
+# So, conflicting kern entries are allowed with the understanding
+# that any conflicting entry overrides the previous entry.
+#
+# For example, we make a dictionary entry for the set of all As
+# but make a few later adjustments for the Aogonek glyph.
+~As [
+	-41  Cs
+	-47  perics			# A union of several sets and glyphs
+	-50  csc
+	-46  f				# The first mention of this glyph
+	-100 florin			# Yet another first
+	-43  Gs
+	-27  gs				# Override perics
+	-43  Hbar			# First
+	-47  hbar			# First
+	-45  hbar.sc		# Another first mention
+	-71  jcircumflex	# Not a first mention, but first use outside a set
+	-33  jsc
+	-53  oe				# First override (of perics)
+	-19  oslash			# First mention
+	-50  osc			# Not to be confused with o.sc
+	-10  oslash.sc		# First mention
+	-50  q.sc			# First use outside a set
+	-39  Ss
+	-42  ss
+	-43  ssc
+	-155 Ts
+	-77  ts
+	-119 tsc
+	-118 Tbar			# First mention
+	-64  tbar			# First mention
+	-116 tbar.sc		# First mention
+	-156 V				# First mention
+	-157 v				# First mention
+	-126 v.sc			# First
+	-156 Ws
+	-112 ws
+	-110 wsc
+	-17  X				# First mention
+	-13  x				# First
+	-28  x.sc			# First
+	-186 Ys
+	-109 ys
+	-159 ysc
+	-17  Zs
+	-2   zs
+	-6   ampersand		# First mention
+	-103 asciicircum	# First
+	-141 asterisk		# First
+	-135 backslash		# First
+	-199 one			# First
+	-136 question		# First
+	-116 quotes
+	-142 upperquotes
+]
+~Aogonek [	# All of these are just overrides of the ~As above
+	-10  florin
+	-7   jcircumflex
+	-69  ys
+]
+
+# Lower-case glyphs can be quite different of their upper-case siblings.
+# As such, they kern separately from each other.
+~as [
+	-90  florin
+	-61  jcircumflex
+	-67  Ts
+	-33  ts
+	-74  Tbar
+	-11  tbar
+	-74  V
+	-46  v
+	-67  Ws
+	-32  ws
+	-82  Ys
+	-43  ys
+	-65  asterisk
+	-39  backslash
+	-12  question
+	-41  quotes
+	-40  upperquotes
+]
+~aogonek [	# Again, these are just exceptions from the ~as above.
+	 0   florin			# This means, do not kern
+	-21  jcircumflex
+]
+
+# Similarly, small-cap glyphs are different from regular caps and may need
+# their own kerning pairs. In this particular case, however, aogonek.sc
+# uses all the same values as the rest of the asc set.
+~asc [
+	-30  csc
+	-123 florin
+	-30  gsc
+	-25  hbar.sc
+	-30  osc
+	-35  oe.sc			# First use outside a set
+	-35  q.sc
+	-135 tsc
+	-119 tbar.sc
+	-130 v.sc
+	-120 wsc
+	-150 ysc
+	-157 upperquotes
+]
+
+# This seemingly small list covers a large number of dictionary entries,
+# which is the main reason for using jadro rather than doing it glyph by glyph!
+~Round [	# = {B Ds Eng Eth Os Q Ss}
+	-43  As
+	-60  AE
+	-110 florin
+	-48  V
+	-33  Ws
+	-66  Ys
+	-53  upperquotes
+]
+
+# Here is another superlist. Since we have not declared its leading glyph set
+# yet, we do that first (just to show you can do it this late in the game,
+# though the script would be much easier to read if we declared all our sets
+# before building the dictionary, and the jadro compiler will issue a warning
+# just in case you mistyped the ':').
+:round {b es eth os p ss}
+~round [
+	-32  As
+	-43  AE
+	-107 florin
+	-111 Ts
+	-56  Tbar
+	-62  V
+	-26  v
+	-49  Ws
+	-24  ws
+	-17  X
+	-35  x
+	-104 Ys
+	-26  ys
+	-35  upperquotes
+]
+
+# Yet another superlist covering numerous dictionary keys.
+~roundsc [
+	-27  asc
+	-37  ae.sc
+	-89  florin
+	-47  v.sc
+	-37  wsc
+	-63  ysc
+	-45  upperquotes
+]
+
+# The two lower-case letters with the alternate caron use the same
+# kerning in the OpenAir font group.
+:carons {dcaron lcaron}
+~carons [
+	-51  perias
+	-51  perics
+	-35  oslash
+	-51  ss
+]
+
+# The glyphs C and G share kerning pairs in this font group as well.
+# As do the sets derived from them.
+:CG {Cs Gs}
+~CG [
+	-43  As
+	-75  AE
+	-47  asc
+	-63  ae.sc
+	-140 florin
+	-37  jcircumflex
+	-53  Ts
+	-53  Tbar
+	-57  V
+	-23  v.sc
+	-47  Ws
+	-29  wsc
+	-67  X
+	-57  x.sc
+	-87  Ys
+	-61  ysc
+	-43  Zs
+	-43  zsc
+	-29  upperquotes
+]
+
+~cs [
+	-97  florin
+	-79  jcircumflex
+	-37  v
+	-29  ws
+	-37  x
+	-31  ys
+	-33  upperquotes
+]
+
+:cgsc {csc gsc}
+~cgsc [
+	-29  asc
+	-43  ae.sc
+	-101 florin
+	-31  ysc
+	-40  upperquotes
+]
+
+# This dictionary entry represents a single kerning pair. And yes, it uses a
+# positive adjustment to increase the distance between the two glyphs.
+~Eogonek [55 j]
+
+# This entry is for a leading glyph that has not appeared in this script
+# before. That is perfectly legal since glyph names need not be declared
+# before they are used. Actually, not only do they need not be declared,
+# there is no way to declare them to start with.
+~F [
+	-122 periAs
+	-68  perias
+	-60  florin
+	-179 commas
+]
+
+~f [
+	-34  as
+	-37  perics
+	-143 florin
+	-35  x
+	-54  ampersand
+]
+
+# The florin is in almost every dictionary entry as a periglyph.
+# It even is its own periglyph.
+~florin [-162 florin]
+
+~f.sc [
+	-92  asc
+	-129 florin
+	-145 commas
+]
+
+~Ks [
+	-50  perias
+	-50  perics
+	-145 florin
+	-118 v
+	-118 ws
+	-20  x
+	-116 ys
+	-53  dashes
+	-140 hyphen			# First mention
+	-46  upperquotes
+]
+
+~ks [
+	-40  perias
+	-40  perics
+	-61  florin
+	-36  v
+	-36  ws
+	-20  x
+	-20  ys
+	-99  hyphen
+]
+
+~ksc [
+	-110 florin
+	-53  dashes
+	-140 hyphen
+	-33  upperquotes
+]
+
+~kgreenlandic.sc [
+	-99  periAs
+	-89  periasc
+	-127 jsc
+	-15  Zs
+	-75  commas
+	-173 hyphen
+	-95  dashes
+]
+
+~Ls [	# Adjustments common to L1 and L2
+	-77  periCs
+	-133 florin
+	-44  OE
+	-24  Oslash
+	-161 Ts
+	-161 Tbar
+	-149 V
+	-148 Ws
+	-135 backslash
+	-160 question
+	-211 upperquotes
+]
+
+~L1 [
+	-241 Ys
+	-246 asterisk
+	-189 quotes
+]
+
+~L2 [
+	-201 Ys
+	-139 asterisk
+	-136 quotes
+]
+
+~Lcaron [	# Quite different from the other Ls!
+	-74  periCs
+	-133 florin
+	-41  OE
+	-14  Oslash
+	-121 Ts
+	-121 Tbar
+	-119 V
+	-128 Ws
+	-121 Ys
+	-119 asterisk
+	-94  backslash
+	-94  question
+	-93  quotes
+	-71  upperquotes
+]
+
+~Horns [
+	-152 florin
+	-112 Js
+]
+
+~horns [
+	-82  florin
+]
+
+~hornsc [
+	-97  florin
+	-64  jsc
+]
+
+~P [
+	-116 As
+	-167 AE
+	-40  perias
+	-132 periasc
+	-40  perics
+	-39  pericsc
+	-48  V
+	-37  v
+	-17	 v.sc
+	-33  Ws
+	-31  ws
+	-16  wsc
+	-40  x
+	-66  Ys
+	-25  ys
+	-17  ysc
+	-37  zs
+	-223 commas
+]
+
+~p.sc [
+	-116 asc
+	-140 ae.sc
+	-115 florin
+	-48  v.sc
+	-33  wsc
+	-46  ysc
+	-170 commas
+]
+
+~Rs [
+	-30  As
+	-33  AE
+	-28  perias
+	-15  periasc
+	-57  cs
+	-57  ds
+	-71  es
+	-44  f
+	-132 florin
+	-44  gs
+	-69  perios
+	-57  q
+	-107 V
+	-60  v
+	-58  v.sc
+	-106 Ws
+	-69  ws
+	-63  wsc
+	-34  x
+	-119 Ys
+	-72  ys
+	-69	 ysc
+	-91  hyphen
+	-60  upperquotes
+]
+
+~rs [
+	-117 As
+	-138 AE
+	-48  perias
+	-48  perics
+	-132 florin
+	-30  v.sc
+	-35  Ws
+	-17  wsc
+	-19  x
+	-56  x.sc
+	-19  ys
+	-33	 ysc
+]
+
+~r [	# Different in r, from racute and rcaron.
+	-121 Ts
+	-87  V
+	-121 X
+	-34  x
+	-113 Ys
+	-46  ysc
+]
+
+~racute [
+	-74  Ts
+	-67  V
+	-19  v.sc
+	-88  X
+	-53  Ys
+	-20  V
+]
+
+~rcaron [
+	-34  Ts
+	-34  v.sc
+	-35  Ws
+	 0   w.sc			# Override: No kerning for this pair.
+	-41  X
+	-26  Ys
+]
+
+~rsc [
+	-94  florin
+	-67  v.sc
+	-53  wsc
+	-67  ysc
+	-91  hyphen
+	-40  upperquotes
+]
+
+~Ts [
+	-171 As
+	-227 AE
+	-137 as
+	-145 ae
+	-142 asc
+	-215 ae.sc
+	-137 perics
+	-75  f
+	-195 florin
+	-207 Js
+	-166 jsc
+	-78  periOs
+	-127 periosc
+	-50  Ss
+	-95  ssc
+	-207 v
+	-47  Ws
+	-178 ws
+	-60  X
+	-195 x
+	-23  x.sc
+	-53  Ys
+	-139 ys
+	-72  Zs
+	-149 zs
+	-63  zsc
+	-102 ampersand
+	-112 asciicircum
+	-116 at
+	-148 commas
+	-204 hyphen
+	-33  upperquotes
+]
+
+~t [	# This is just the letter t, not the set of ts.
+	-17  as
+	-35  ae
+	-96  florin
+	-23  jcircumflex
+	-74  V
+	-27  v.sc
+	-41  Ws
+	-33  wsc
+	-74  Ys
+	-36  ysc
+	-99  hyphen
+]
+
+~tcaron [
+	-77  perias
+	-23  periCs
+	-77  perics
+	-29  pericsc
+	-18  f
+	-140 florin
+	-77  g
+	-103 J
+	-35  jsc
+	-34  Ss
+	-19  ssc
+	-21  V
+	-21  v
+	-33  Ws
+	-47  ws
+	-47  X
+	-40  x
+	-33  Zs
+	-34  zs
+	-68  ampersand
+	-45  asciicircum
+	-36  at
+	-43  commas
+	-183 hyphen
+]
+
+~tsc [
+	-144 asc
+	-180 ae.sc
+	-139 florin
+	-147 jsc
+	-18  pericsc
+	-30  ssc
+	-20  wsc
+	-33  x.sc
+	-13  ysc
+	-39  zsc
+	-62  ampersand
+	-32  asciicircum
+	-148 commas
+	-191 hyphen
+]
+
+~V [
+	-183 As
+	-213 AE
+	-117 perias
+	-97  perics
+	-75  f
+	-195 florin
+	-125 Js
+	-74  periCs
+	-79  Oslash
+	-103 perics
+	-110 oslash
+	-62  Ss
+	-69  ss
+	-60  v
+	-65  ws
+	-60  X
+	-82  x
+	-42  x.sc
+	-26  Ys
+	-20  ys
+	-72  Zs
+	-82  zs
+	-43  zsc
+	-109 ampersand
+	-69  asciicircum
+	-96  at
+	-171 commas
+	-165 hyphen
+]
+
+~v [
+	-130 periAs
+	-44  perias
+	-112 periasc
+	-36  perics
+	-122 florin
+	-72  Js
+	-83  jsc
+	-35  oslash
+	-36  ss
+	-123 Ts
+	-42  V
+	-25  Ws
+	-80  X
+	-29  x
+	-39  x.sc
+	-79  Ys
+	-23  ysc
+	-52  Zs
+	-27  zs
+	-56  ampersand
+	-27  asciicircum
+	-23  at
+	-84  commas
+	-92  hyphen
+]
+
+~v.sc [
+	-150 asc
+	-194 ae.sc
+	-136 florin
+	-125 jsc
+	-54  pericsc
+	-52  oslash.sc
+	-35  ssc
+	-33  x.sc
+	-17  ysc
+	-25  zsc
+	-82  ampersand
+	-42  asciicircum
+	-56  at
+	-124 commas
+	-105 hyphen
+]
+
+~Ws [
+	-150 As
+	-174 AE
+	-77  perias
+	-106 asc
+	-152 ae.sc
+	-43  periCs
+	-77  perics
+	-38  pericsc
+	-28  f
+	-168 florin
+	-105 Js
+	-125 jsc
+	-52  Oslash
+	-70  oslash
+	-64  oslash.sc
+	-35  Ss
+	-63  ss
+	-68  ssc
+	-54  v
+	-31  ws
+	-53  X
+	-55  x
+	-41  x.sc
+	-19  Ys
+	-40  ys
+	-27  ysc
+	-59  Zs
+	-62  zs
+	-50  zsc
+	-96  ampersand
+	-69  asciicircum
+	-83  at
+	-111 commas
+	-132 hyphen
+	-20  upperquotes
+]
+
+~ws [
+	-103 As
+	-125 AE
+	-31  perias
+	-30  perics
+	-122 florin
+	-65  J
+	-29  oslash
+	-29  ss
+	-136 Ts
+	-69  V
+	-52  Ws
+	-93  X
+	-29  x
+	-79  Ys
+	-52  Zs
+	-17  zs
+	-42  ampersand
+	-15  asciicircum
+	-36  at
+	-71  commas
+	-125 hyphen
+]
+
+~wsc [
+	-130 asc
+	-141 ae.sc
+	-140 florin
+	-98  jsc
+	-34  pericsc
+	-33  oslash.sc
+	-48  ssc
+	-33  x.sc
+	-10  ysc
+	-25  zsc
+	-69  ampersand
+	-49  asciicircum
+	-36  at
+	-77  commas
+	-98  hyphen
+]
+
+~X [
+	-39  perics
+	-47  f
+	-110 florin
+	-66  perios
+	-26  oslash
+	-52  ts
+	-84  v
+	-37  v.sc
+	-87  ws
+	-48  wsc
+	-105 ys
+	-58  ysc
+	-42  ampersand
+	-90  asciicircum
+	-43  at
+	-156 hyphen
+	-33  upperquotes
+]
+
+~x [
+	-19  perics
+	-77  florin
+	-18  oslash
+	-15  ts
+	-22  ampersand
+	-43  asciicircum
+	-89  hyphen
+]
+
+~x.sc [
+	-72  florin
+	-29  ampersand
+	-43  asciicircum
+	-30  at
+	-102 hyphen
+]
+
+~Ys [
+	-196 As
+	-257 AE
+	-134 as
+	-172 ae
+	-145 perics
+	-115 cs				# Override perics
+	-135 es				# Override perics
+	-197 florin
+	-142 os				# Override perics
+	-144 oslash
+	-116 ampersand
+	-95  asciicircum
+	-129 at
+	-180 commas
+	-129 hyphen
+	-33  upperquotes
+]
+
+~ys [
+	-136 periAs
+	-35  perias
+	-35  perics
+	-105 florin
+	-34  oslash
+	-49  ampersand
+	-15  asciicircum
+	-60  commas
+	-95  hyphen
+]
+
+~ysc [
+	-167 asc
+	-154 acircumflex.sc	# Override asc
+	-211 ae.sc
+	-116 florin
+	-76  ampersand
+	-68  asciicircum
+	-56  at
+	-140 commas
+	-129 hyphen
+]
+
+~Zs [
+	-27  periCs
+	-33  perics
+	-34  pericsc
+	-42  f
+	-109 florin
+	-35  oslash
+	-22  q				# Override perics
+	-27  Ss
+	-27  ss
+	-19  ssc
+	-34  ts
+	-27  v
+	-15  ws
+	-17  Ys
+	-15  ys
+	-15  ysc
+	-23  asciitilde
+	-15  at
+	-80  hyphen
+]
+
+~zs [
+	-17  perics
+	-36  es				# Override perics
+	-76  florin
+	-16  oslash
+	-17  ss
+	-15  ts
+	-15  v
+	-15  ws
+	-57  Ys
+	-15  ys
+	-28  ysc
+	-73  hyphen
+]
+
+~zsc [
+	-27  pericsc
+	-69  florin
+	-27  ssc
+	-17  ysc
+	-23  asciitilde
+	-27  at
+	-87  hyphen
+]
+
+~ampersand [
+	-49  periCs
+	-56  perics
+	-50  pericsc
+	-69  f
+	-156 florin
+	-50  g
+	-78  jcircumflex
+	-49  perios			# Override perics
+	-53  Ss
+	-54  ss
+	-47  ssc
+	-177 Ts
+	-86  ts
+	-132 tsc
+	-157 V
+	-115 v
+	-112 v.sc
+	-121 Ws
+	-99  ws
+	-102 wsc
+	-128 asterisk
+	-86  backslash
+	-80  hyphen
+]
+
+~asciicircum [
+	-62  periAs
+	-65  periasc
+	-132 Js
+	-15  jcircumflex
+	-169 jsc
+	-57  Ts
+	-79  V
+	-33  v.sc
+	-43  Ws
+	-30  wsc
+	-80  X
+	-70  x.sc
+	-78  Ys
+	-35  ysc
+	-64  Zs
+	-41  zsc
+]
+
+~lowerquotes [
+	-40  periAs
+	-49  perias
+	-60  periasc
+	-113 periCs
+	-67  perics
+	-116 pericsc
+	-93  f
+	-47  florin
+	-40  gs				# Override perics
+	-52  Js
+	-52  jsc
+	-73  Ss
+	-74  ss
+	-77  ssc
+	-179 Ts
+	-88  ts
+	-176 tsc
+	-205 V
+	-173 v
+	-173 v.sc
+	-133 Ws
+	-135 ws
+	-136 wsc
+	-33  X
+	-34  x
+	-40  x.sc
+	-204 Ys
+	-34  ys
+	-178 ysc
+	-47  Zs
+	-53  zs
+	-33  zsc
+	-28  ampersand
+	-33  at
+	-43  hyphen
+	-46  spaces
+]
+
+~upperquotes [
+	-182 periAs
+	-73  perias
+	-159 asc
+	-179 ae.sc
+	-37  periCs
+	-55  perics
+	-40  pericsc
+	-117 florin
+	-214 Js
+	-163 jsc
+	-53  Ss
+	-53  ss
+	-53  ssc
+	-48  X
+	-40  x
+	-53  x.sc
+	-60  Ys
+	-40  ys
+	-40  ysc
+	-69  Zs
+	-40  zs
+	-60  zsc
+	-23  asciitilde
+	-96  ampersand
+	-34  at
+	-60  hyphen
+	-46  spaces
+]
+
+~periods [
+	-160 Ts
+	-117 tsc
+	-170 V
+	-122 v.sc
+	-103 Ws
+	-65  ws
+	-102 backslash
+	 83  periods
+]
