@@ -47,7 +47,7 @@
 #include "../include/jadro.h"
 
 #define	BUFFERBYTES	128
-typedef enum {LABEL, NUMBER, COLON, TILDE, MINUS, PLUS, LSQUARE, RSQUARE, LCURLY, RCURLY, JADERR, JEOF} parse;
+typedef enum {LABEL, NUMBER, COLON, TILDE, CIRCUM, MINUS, PLUS, LSQUARE, RSQUARE, LCURLY, RCURLY, LANGLE, RANGLE, JADERR, JEOF} parse;
 
 int jeof(unsigned int line, unsigned int col) {
 	fprintf(stderr, JADRO_EndOfFile, line, col);
@@ -158,6 +158,9 @@ int gettoken(FILE *input, unsigned int *line, unsigned int *col, char *string, u
 		case '~':
 			return TILDE;
 			break;
+		case '^':
+			return CIRCUM;
+			break;
 		case '-':
 			return MINUS;
 			break;
@@ -175,6 +178,12 @@ int gettoken(FILE *input, unsigned int *line, unsigned int *col, char *string, u
 			break;
 		case '}':
 			return RCURLY;
+			break;
+		case '<':
+			return LANGLE;
+			break;
+		case '>':
+			return RANGLE;
 			break;
 /* Actually, this cannot happen since skipblanks
    handles it before returning here!
@@ -242,14 +251,123 @@ void printkerns(JADRO_jadro *jadro, FILE *output) {
 	JADRO_kern  *kern;
 	
 	for (kerns = jadro->kerns; kerns; kerns = kerns->next) {
-		fprintf(output, JADRO_tilde, kerns->uzol->label);
-		for (kern = kerns->first; kern; kern = kern->next)
-			fprintf(output, JADRO_rozdiel, kern->rozdiel, kern->uzol->label);
-		fprintf(output, JADRO_rightsquare);
+		int peri = (kerns->peri);
+		fprintf(output, (peri) ? JADRO_circumflex : JADRO_tilde, kerns->uzol->label);
+		for (kern = kerns->first; kern; kern = kern->next) {
+			if (peri) fprintf(output, JADRO_odlisnost, kern->uzol->label, kern->rozdiel);
+			else fprintf(output, JADRO_rozdiel, kern->rozdiel, kern->uzol->label);
+		}
+		fprintf(output,  (peri) ? JADRO_rightangle : JADRO_rightsquare);
 	}
 }
 
 // Create preliminary kerning dictionary entry.
+
+int circum (JADRO_jadro *jadro, FILE *input, unsigned int *line, unsigned int *col, char *string, unsigned bytes, unsigned int *ln, unsigned int *cl) {
+	JADRO_uzol *glyph, *periglyph;
+	JADRO_kerns *kerns;
+	JADRO_kern  *kern;
+	JADRO_errors err;
+	int token = gettoken(input, line, col, string, bytes, ln, cl);
+	int c, k;
+	unsigned lin, co;
+
+	if (token != LABEL) {
+		fprintf(stderr, JADRO_PeriglyphSetExpected, *line, *col);
+		return ((token == EOF) || (token == JEOF)) ? JEOF : JADERR;
+	}
+
+	periglyph = JADRO_getuzol(jadro, string, &err);
+
+	if (periglyph == NULL) {
+		switch (err) {
+			case JADRO_NOERR:
+				fprintf(stderr, JADRO_PeriglyphFail, *ln, *cl, string);
+				break;
+			case JADRO_EOMEM:
+				fprintf(stderr, JADRO_OutOfMemoryError, *ln, *cl);
+				break;
+			case JADRO_INVAL:
+				fprintf(stderr, JADRO_SyntaxError, *ln, *cl, string);
+				break;
+		}
+		return JADERR;
+	}
+	else if (kerns = JADRO_nextkerns(jadro, periglyph)) {
+		kerns->peri = 1;
+		token = gettoken(input, line, col, string, bytes, ln, cl);
+		if (token != LANGLE) {
+			fprintf(stderr, JADRO_LeftAngleExpected, *line, *col, string);
+			return ((token == EOF) || (token == JEOF)) ? JEOF : JADERR;
+		}
+		// Add kerning pairs to uzol.
+		for (;;) {
+			token = gettoken(input, line, col, string, bytes, ln, cl);
+			if (token == RANGLE) {
+				break;
+			}
+			else {
+				if (token == LABEL) {
+					glyph = JADRO_getuzol(jadro, string, &err);
+					if (glyph == NULL) {
+						switch (err) {
+							case JADRO_NOERR:
+								fprintf(stderr, JADRO_GlyphCreateError, *ln, *cl, string);
+								break;
+							case JADRO_EOMEM:
+								fprintf(stderr, JADRO_OutOfMemoryError, *ln, *cl, string);
+								break;
+							case JADRO_INVAL:
+								fprintf(stderr, JADRO_SyntaxError, string, *ln, *cl);
+								break;
+						}
+						return JADERR;
+					}
+				}
+				else if (token == RCURLY) {
+					fprintf(stderr, JADRO_RightCurlyWarning, *line, *col, '>');
+					break;
+				}
+				else if (token == RSQUARE) {
+					fprintf(stderr, JADRO_RightSquareWarning, *line, *col, '>');
+					break;
+				}
+				else {
+					fprintf(stderr, JADRO_LabelAngleExpected, *line, *col, string);
+					return ((token == EOF) || (token == JEOF)) ? JEOF : JADERR;
+				}
+
+				token = gettoken(input, line, col, string, bytes, ln, cl);
+
+				if (token == MINUS) {
+					lin = *line; co = *col;
+					if ((c = gettoken(input, line, col, string+1, bytes-1, ln, cl)) != NUMBER) {
+						fprintf(stderr, JADRO_NumberExpected, lin, co, string);
+						return ((c == EOF) || (c == JEOF)) ? JEOF : JADERR;
+					}
+					else k = atoi(string);
+				}
+				else if (token == PLUS) {
+					lin = *line; co = *col;
+					if ((c = gettoken(input, line, col, string, bytes, ln, cl)) != NUMBER) {
+						fprintf(stderr, JADRO_NumberExpected, lin, co, string);
+						return ((c == EOF) || (c == JEOF)) ? JEOF : JADERR;
+					}
+					else k = atoi(string);
+				}
+				else if (token == NUMBER) k = atoi(string);
+				else {
+					fprintf(stderr, JADRO_NumberExpected, *ln, *col, string);
+					return ((token == JEOF) || (token == EOF)) ? JEOF : JADERR;
+				}
+				kern = JADRO_nextkern(kerns, k, glyph);
+			}
+		}
+	}
+
+	return 0;
+}
+
 int tilde (JADRO_jadro *jadro, FILE *input, unsigned int *line, unsigned int *col, char *string, unsigned bytes, unsigned int *ln, unsigned int *cl) {
 	JADRO_uzol *glyph, *periglyph;
 	JADRO_kerns *kerns;
@@ -311,7 +429,11 @@ int tilde (JADRO_jadro *jadro, FILE *input, unsigned int *line, unsigned int *co
 				}
 				else if (token == NUMBER) k = atoi(string);
 				else if (token == RCURLY) {
-					fprintf(stderr, JADRO_RightCurlyWarning, *line, *col);
+					fprintf(stderr, JADRO_RightCurlyWarning, *line, *col, ']');
+					break;
+				}
+				else if (token == RANGLE) {
+					fprintf(stderr, JADRO_RightAngleWarning, *line, *col, ']');
 					break;
 				}
 				else {
@@ -390,7 +512,11 @@ int colon(JADRO_jadro *jadro, FILE *input, FILE *output, unsigned int *line, uns
 			break;
 		}
 		else if (token == RSQUARE) {
-			fprintf(stderr, JADRO_RightSquareWarning, *line, *col);
+		fprintf(stderr, JADRO_RightSquareWarning, *line, *col, '}');
+			break;
+		}
+		else if (token == RANGLE) {
+		fprintf(stderr, JADRO_RightAngleWarning, *line, *col, '}');
 			break;
 		}
 		else if (token == LABEL) {
@@ -419,7 +545,7 @@ int parser(JADRO_jadro *jadro, FILE *input, FILE *output) {
 	unsigned int didtilde = 0;
 
 	while ((token = gettoken(input, &line, &col, string, BUFFERBYTES, &ln, &cl)) != EOF) {
-		// Only two tokens are valid here, COLON, TILDE.
+		// Only three tokens are valid here, COLON, TILDE, CIRCUM.
 		// Anything else at this point is syntax error.
 		switch (token) {
 			case COLON:
@@ -432,6 +558,11 @@ int parser(JADRO_jadro *jadro, FILE *input, FILE *output) {
 			case TILDE:
 				didtilde++;
 				if (tilde(jadro, input, &line, &col, string, BUFFERBYTES, &ln, &cl) == JEOF)
+					return jeof(line, col);
+				break;
+			case CIRCUM:
+				didtilde++;
+				if (circum(jadro, input, &line, &col, string, BUFFERBYTES, &ln, &cl) == JEOF)
 					return jeof(line, col);
 				break;
 			case JEOF:

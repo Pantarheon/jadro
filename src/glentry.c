@@ -23,7 +23,29 @@ JADRODC JADRO_uzol * JADRO_glyphentry(JADRO_jadro *jadro, JADRO_uzol *glyph) {
 		if (glyph->first.kern) glyph->first.kern = JADRO_freekern(glyph->first.kern);
 
 		for (kerns = jadro->kerns; kerns; kerns = kerns->next) {
-			if (JADRO_isglyphinset(glyph, kerns->uzol)) {
+			if (kerns->peri) {
+				for (kern = kerns->first; kern; kern = kern->next) {
+					if (JADRO_isglyphinset(glyph, kern->uzol)) {
+						if (kerns->uzol->set == 0) {
+							k = JADRO_getkern(glyph, kerns->uzol);
+							if (k == NULL) return NULL;
+							else {
+								k->uzol    = kerns->uzol;
+								k->rozdiel = kern->rozdiel;
+							}
+						}
+						else { // kerns is a set
+							for (bod = kerns->uzol->first.bod; bod; bod = bod->next) {
+								k = JADRO_getkern(glyph, bod->uzol);
+								if (k == NULL) return NULL;
+								k->uzol    = bod->uzol;
+								k->rozdiel = kern->rozdiel;
+							}
+						}
+					}
+				}
+			}
+			else if (JADRO_isglyphinset(glyph, kerns->uzol)) {
 				for (kern = kerns->first; kern; kern = kern->next) {
 					if (kern->uzol->set == 0) {
 						k = JADRO_getkern(glyph, kern->uzol);
