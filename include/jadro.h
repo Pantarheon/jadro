@@ -88,9 +88,10 @@ typedef struct JADRO_KERN {
 } JADRO_kern;
 
 typedef struct JADRO_KERNS {
-	JADRUZOL           *uzol;	// The leading glyph or set thereof
+	JADRUZOL           *uzol;	// The (leading or peri)glyph or set thereof
 	struct JADRO_KERNS *next;
-	struct JADRO_KERN  *first;	// First periglyph or set thereof
+	struct JADRO_KERN  *first;	// First (peri)glyph or set thereof
+	unsigned int peri:1;
 } JADRO_kerns;
 
 typedef struct JADRO_UZOL {
@@ -184,8 +185,11 @@ JADRODC extern const char JADRO_colon[];	// = ":%s {\n";
 JADRODC extern const char JADRO_setmember[];	// = "\t%s\n";
 JADRODC extern const char JADRO_rightcurly[];	// = "}\n\n";
 JADRODC extern const char JADRO_tilde[];	// = "~%s [\n";
+JADRODC extern const char JADRO_circumflex[];	// = "^%s <\n";
 JADRODC extern const char JADRO_rozdiel[];	// = "%10i  %s\n";
+JADRODC extern const char JADRO_odlisnost[];	// = "\t%s\t%8i\n";
 JADRODC extern const char JADRO_rightsquare[];	// = "]\n\n";
+JADRODC extern const char JADRO_rightangle[];	// = ">\n\n";
 
 JADRODC extern const char JADRO_plist[];	// = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 //	"<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
@@ -199,26 +203,30 @@ JADRODC extern const char JADRO_keyinteger[];	// = "\t\t<key>%s</key><integer>%i
 
 /*** Common jadro compiler errors and warnings ***/
 
-JADRODC extern const char JADRO_TopError[];	// = "JADRO Error [%u:%u]: Expected ':' or '~', not '%s'.\n";
+JADRODC extern const char JADRO_TopError[];	// = "JADRO Error [%u:%u]: Expected ':', '~', or '^', not '%s'.\n";
 JADRODC extern const char JADRO_SetExpected[];	// = "JADRO Error [%u:%u]: Expected a set name.\n";
 JADRODC extern const char JADRO_SetFail[];	// = "JADRO Error [%u:%u]: Could not create set '%s'.\n";
 JADRODC extern const char JADRO_SetRedefinition[];	// = "JADRO Error [%u:%u]: Set '%s' redefinition.\n";
 JADRODC extern const char JADRO_AddToSetFail[];	// = "JADRO Error [%u:%u]: Could not add '%s' to set\n";
 JADRODC extern const char JADRO_GlyphSetExpected[];	// = "JADRO Error [%u:%u]: Expected a glyph or set name.\n";
+JADRODC extern const char JADRO_PeriglyphSetExpected[];	// = "JADRO Error [%u:%u]: Expected a periglyph or set name.\n";
 JADRODC extern const char JADRO_GlyphCreateError[];	// = "JADRO Error [%u:%u]: Could not create glyph '%s'\n";
 JADRODC extern const char JADRO_OutOfMemoryError[];	// = "JADRO Error [%u:%u]: Out of memory.\n";
 JADRODC extern const char JADRO_SyntaxError[];	// = "JADRO Error [%u:%u]: Invalid label syntax '%s'.\n";
 JADRODC extern const char JADRO_LeftCurlyExpected[];	// = "JADRO Error [%u:%u]: Expected '{', not '%s'.\n";
 JADRODC extern const char JADRO_LeftSquareExpected[];	// = "JADRO Error [%u:%u]: Expected '[', not '%s'.\n";
+JADRODC extern const char JADRO_LeftAngleExpected[];	// = "JADRO Error [%u:%u]: Expected '<', not '%s'.\n";
 JADRODC extern const char JADRO_NumberExpected[];	// = "Jadro Error [%u:%u]: Expected a number, not '%s'.\n";
 JADRODC extern const char JADRO_LabelBracketExpected[];	// = "JADRO Error [%u:%u]: Expected a label or '}', not '%s'.\n";
 JADRODC extern const char JADRO_NumberBracketExpected[];	// = "JADRO Error [%u:%u]: Expected a number or ']', not '%s'.\n";
+JADRODC extern const char JADRO_LabelAngleExpected[];	// = "JADRO Error [%u:%u]: Expected a label or '>', not '%s'.\n";
 JADRODC extern const char JADRO_PeriglyphFail[];	// = "JADRO Error [%u:%u]: Could not create periglyph '%s'.\n";
 JADRODC extern const char JADRO_EndOfFile[];	// = "JADRO Error: [%u:%u]: Unexpected end of file.\n";
 
 JADRODC extern const char JADRO_DelayedSetDefinition[];	// = "Jadro Warning [%u:%u]: A set definition after kerning pair(s) defined.\n";
-JADRODC extern const char JADRO_RightSquareWarning[];	// = "Jadro Warning [%u:%u]: Pretending the ']' is a '}'.\n";
-JADRODC extern const char JADRO_RightCurlyWarning[];	// = "Jadro Warning [%u:%u]: Pretending the '}' is a ']'.\n";
+JADRODC extern const char JADRO_RightSquareWarning[];	// = "Jadro Warning [%u:%u]: Pretending the ']' is a '%c'.\n";
+JADRODC extern const char JADRO_RightCurlyWarning[];	// = "Jadro Warning [%u:%u]: Pretending the '}' is a '%c'.\n";
+JADRODC extern const char JADRO_RightAngleWarning[];	// = "Jadro Warning [%u:%u]: Pretending the '>' is a '%c'.\n";
 
 /*** The rest is used internally by libjadro ***/
 
