@@ -10,13 +10,17 @@ JADRO_DelayedSetDefinition DATA
 JADRO_EndOfFile DATA
 JADRO_GlyphCreateError DATA
 JADRO_GlyphSetExpected DATA
+JADRO_LabelAngleExpected DATA
 JADRO_LabelBracketExpected DATA
+JADRO_LeftAngleExpected DATA
 JADRO_LeftCurlyExpected DATA
 JADRO_LeftSquareExpected DATA
 JADRO_NumberBracketExpected DATA
 JADRO_NumberExpected DATA
 JADRO_OutOfMemoryError DATA
 JADRO_PeriglyphFail DATA
+JADRO_PeriglyphSetExpected DATA
+JADRO_RightAngleWarning DATA
 JADRO_RightCurlyWarning DATA
 JADRO_RightSquareWarning DATA
 JADRO_SetExpected DATA
@@ -25,7 +29,9 @@ JADRO_SetRedefinition DATA
 JADRO_SyntaxError DATA
 JADRO_TopError DATA
 JADRO_addlabeltoset
+JADRO_adduzoltoset
 JADRO_char
+JADRO_circumflex DATA
 JADRO_colon DATA
 JADRO_createsetuzol
 JADRO_dict DATA
@@ -37,6 +43,7 @@ JADRO_freejadro
 JADRO_freekern
 JADRO_freekerns
 JADRO_freeuzol
+JADRO_getkern
 JADRO_getuzol
 JADRO_glyphentry
 JADRO_initialchar
@@ -51,7 +58,9 @@ JADRO_newuzol
 JADRO_nextkern
 JADRO_nextkernedglyph
 JADRO_nextkerns
+JADRO_odlisnost DATA
 JADRO_plist DATA
+JADRO_rightangle DATA
 JADRO_rightcurly DATA
 JADRO_rightsquare DATA
 JADRO_rozdiel DATA
@@ -62,3 +71,5 @@ JADRO_slashdicts DATA
 JADRO_slashplist DATA
 JADRO_strcmp
 JADRO_tilde DATA
+__gcc_deregister_frame
+__gcc_register_frame
