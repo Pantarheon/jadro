@@ -91,7 +91,7 @@ And here are two invalid names:
 
 Whenever the `jadro` compiler encounters a valid name it has not seen
 before, it assumes it is the name of a `glyph`. Glyph names need not be
-defined before use. Indeed, the _cannot_ be defined before use.
+defined before use. Indeed, they _cannot_ be defined before use.
 
 A `set` of glyphs is defined and declared at the same time by preceding
 its name by a colon (`:`), and following the name by a list of glyphs
@@ -104,7 +104,7 @@ definitions in `jadro`, mostly to prevent set including a set that includes
 the including set, which would produce an endless recursion.
 
 Once it is defined and declared, the `set` consists of a union of all glyphs
-included in it and in any of the set included. It is OK to include sets with
+included in it and in any of the sets included. It is OK to include sets with
 overlapping members, because a union ignores any duplicates.
 
 For example, we could create these sets,
@@ -244,6 +244,104 @@ followed by the second (the `~a []` example), it will create this plist,
 </dict>
 </plist>
 ```
+
+Sometimes we may want to define kerning pairs in the opposite way,
+that is to start with a periglyph and make a list of glyphs and their
+kerning values.
+
+This is especially useful when we have worked hard on our kerning
+pairs, released our fonts and then realize that, for example, we have
+not defined a number of pairs for glyphs to be followed by, say, a set
+of variations on letter `T`.
+
+So we may just append something like this to our file,
+
+```
+^Ts <
+	Ds	-69
+	dsc	-124
+	Rs	-92
+	rsc	-124
+	B	-46
+	b	-172
+	b.sc	-111
+	P	-34
+	p	-168
+	p.sc	-89
+>
+
+^tsc <
+	dsc	-21
+	rsc	-27
+	b.sc	-24
+>
+```
+
+This is much simpler than having to type,
+
+```
+~Ds [
+	-69 Ts
+]
+
+~dsc [
+	-124 Ts
+	-21 tsc
+]
+
+~Rs [
+	-92 Ts
+]
+
+~rsc [
+	-124 Ts
+	-27 tsc
+]
+
+~B [
+	-46 Ts
+]
+
+~b [
+	-172 Ts
+]
+
+~b.sc [
+	-111 Ts
+	-24 tsc
+]
+
+~P [
+	-34 Ts
+]
+
+~p [
+	-168 Ts
+]
+
+~p.sc [
+	-89 Ts
+]
+```
+
+In either case, the result is exactly the same. But declaring the
+kerning pairs at this point is a lot easier by starting with `periglyph`
+or a `set` thereof.
+
+We do it by starting with the `ASCII Circumflex` (`^`), followed by the
+`periglyph` (or `set` of them), followed by a list of `glyphs` (or `sets`)
+and integers, all enclosed in angle brackets (`<` and `>`).
+
+Please note that in this case the `integer` follows the `glyph`. This to remind
+us that we are assuming the `periglyph` follows the `integer`, as in all
+of our syntax the implied order of kerning pairs is,
+
+```
+glyph kerning_adjustment periglyph
+```
+
+> The `^` option was added in `jadro` version `1.1.0`,
+> so it is not available in version `1.0.0`.
 
 ## Comments and Wipes
 
