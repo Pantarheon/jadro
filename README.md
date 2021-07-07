@@ -380,5 +380,5 @@ in the `path` environment variable.
 If you have Unix or compatible, just get everything from here, then type,
 
 ```
-$ sudo make install-all
+$ sudo make install-all clean
 ```
