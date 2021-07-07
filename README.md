@@ -377,7 +377,7 @@ If you have 64-bit Windows, just dowload the contents of the
 files, which you need to place somewhere on the system included
 in the `path` environment variable.
 
-If you have Windows, just get everything from here, then type,
+If you have Unix or compatible, just get everything from here, then type,
 
 ```
 $ sudo make install-all
