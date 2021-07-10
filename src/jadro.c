@@ -74,6 +74,7 @@ int skiptoeol(FILE *input, unsigned int *line, unsigned int *col) {
 				break;
 		}
 	}
+	return 0;
 }
 
 int ignorechars(FILE *input, unsigned int *line, unsigned int *col) {
@@ -128,7 +129,9 @@ int skipblanks(FILE *input, unsigned int *line, unsigned int *col) {
 		}
 		else if (c == '\t') *col = (*col+3)&~3;
 		else if (c == '\r') *col = 0;
-		else if ((c == '(') && (d = ignorechars(input, line, col))) return d;
+		else if (c == '(') {
+			if (d = ignorechars(input, line, col)) return d;
+		}
 		else if (c > ' ') return c;
 	}
 	return c;
